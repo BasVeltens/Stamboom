@@ -1,0 +1,116 @@
+body, html{
+margin: 0;
+height: 100%;
+background-color: black;
+}
+
+#main_container{
+float: left;
+width: 100%;
+min-height: 100%;
+_height: 100%;
+margin: 0 0 0 0;
+background-color: black;
+}
+
+#header_container{
+width: 100%;
+height: 166px;
+padding: 0 0 0 0;
+background-color: black;
+color: #FFFFFF;
+text-align: center;
+}
+
+#input_container{
+width: 100%;
+height: 100%;
+padding: 0 0 0 0;
+background-color: black;
+/* background-image: url(/oefeningen/stamboom/img/Veltens.png); */
+}
+#center_container{
+float: left;
+width: 100%;
+min-height: 100%;
+_height: 100%;
+margin: 0 0 0 0;
+background-color: black;
+}
+#links_container{
+float: left;
+width: 10%;
+min-height:400px;
+background-color: black;
+}
+#rechts_container{
+float: right;
+width: 10%;
+height:100%;
+background-color: black;
+}
+#footer_container{
+clear: both;
+height: 65px;
+padding: 0 0 0 0;
+background: #ECECEC;
+width: 100%;
+text-align: center;
+background-color: black;
+}
+h1 {
+	font-size:200px;
+	margin:0;
+}
+.klein {
+	font-size:85%;
+}
+#raar  span{
+	background-color:green;
+}
+#raar {
+	color:#fff;
+}
+
+.inspring {
+	margin-left:25%;
+}
+
+#top {
+	width:920px;
+	height:90px;
+	clear:both;
+}
+body {
+    color: #999999;
+    font-size: 12px;
+    margin: 0;
+    overflow: auto;
+}
+
+body.gr {
+    background-color: #f8f8f8;
+    background-image: none;
+}
+body, p, h1, h2, h3, h4, table, td, th, ul, ol, textarea, input {
+    font-family: verdana,helvetica,arial,sans-serif;
+}
+body.gr  input, body.gr  select{
+    background-color: #00ff00;
+}
+
+body.gr  input.button {
+    background-color: #ff00ff;
+}
+
+h1 {
+    font-size: 200%;
+    font-weight: normal;
+    margin-top: 0;
+}
+h2 {
+    font-size: 160%;
+    font-weight: normal;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
