@@ -1,8 +1,6 @@
 <?php
-require_once('../dbconfigStamboom.php'); //verbinding met de database maken
+require_once('../dbconfigStamboom.php');
 
-$persoonid = $_POST["persoon_id"];
-$partnerid = $_POST["partner_id"];
 $geslacht = $_POST["geslacht"];
 $voornaam = $_POST["voornaam"];
 $tweedenaam = $_POST["tweedenaam"];
@@ -25,16 +23,6 @@ $opmerking2 = $_POST["opmerking2"];
 $documentatie1 = $_POST["documentatie1"];
 $documentatie2 = $_POST["documentatie2"];
 $foto1 = $_POST["foto1"];
-$partner1 = $_POST["partner1"];
-$huwlijksdatum1 = $_POST["huwlijksdatum1"];
-$partner2 = $_POST["partner2"];
-$huwlijksdatum2 = $_POST["huwlijksdatum2"];
-$partner3 = $_POST["partner3"];
-$huwlijksdatum3 = $_POST["huwlijksdatum3"];
-$vader = $_POST["vader"];
-$moeder = $_POST["moeder"];
-$broerzus1 = $_POST["broerzus1"];
-$broerzus2 = $_POST["broerzus2"];
 ?>
 
 <html> 
@@ -49,29 +37,31 @@ $broerzus2 = $_POST["broerzus2"];
 <body>
 <div id="main_container">
 	<div id="header_container">
-		<img src="<?php echo $path; ?>/img/BAFWARE.gif" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
-	<div id="input_container" >
-		<div width="100%" >
-			<table width="100%" border="1" cellpadding="2" cellspacing="3" >
+	<div id="input_container">
+		<div width="100%">
+			<table width="100%" border="1" cellpadding="3" cellspacing="1">
 				<tr> 
 					<td width="10%" bgcolor="#C5CED3"><a href="<?php echo $path; ?>/stamboom.php">home</a></td>
 					<td width="10%" bgcolor="#D6DDE0">persoon toevoegen/wijzigen</td> 
 					<td width="10%" bgcolor="#E6EAEC"></td>
 					<td width="10%" bgcolor="#EDEEF1"></td> 
-					<td width="10%" bgcolor="#F4F5F7"><a href="<?php echo $path; ?>/VeltensStamboom.php">Veltens stamboom</a></td>
-					<td width="10%" bgcolor="#F4F5F7"><a href="<?php echo $path; ?>/data/NummereringsLogica.xlsx">nummereringslogica</a></td> 
+					<td width="10%" bgcolor="#F4F5F7">Veltens stamboom</td>
+					<td width="10%" bgcolor="#F4F5F7">nummereringslogica</td> 
 					<td width="10%" bgcolor="#EDEEF1"></td>
 					<td width="30%" bgcolor="#EDEEF1"></td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="1" cellpadding="0" rowspan="3">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td colspan="0" width="100%" height="35px" align="left" >
 					</td>
 				</tr>
 			</table>
-			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/PT3.php" method="post">
+			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/NS3.php" method="post">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" rowspan="3">
 				<tr>
 					<td colspan="0" width="20%" align="right" >
@@ -132,7 +122,7 @@ $broerzus2 = $_POST["broerzus2"];
 				</tr>
 				<tr>
 					<td align="right" >
-						<p>Voorvoegsel meisjesnaam:</p>
+						<p>Voorvoegsel meisjesnaam :</p>
 					</td>
 					<td align="left" >
 						<input type="text" name="voorvoegsel_meisjesnaam" value=""/>
@@ -257,64 +247,12 @@ $broerzus2 = $_POST["broerzus2"];
 					<td align="left" >
 						<input type="text" name="foto1" value=""/>
 					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 1 :</p>
-					</td>
 					<td align="left" >
-						<input type="text" name="partner1" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 1 :</p>
-					</td>
-					<td align="left" >
-						<input type="text" name="huwlijksdatum1" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 2 :</p>
-					</td>
-					<td align="left" >
-						<input type="text" name="partner2" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 2 :</p>
-					</td>
-					<td align="left" >
-						<input type="text" name="huwlijksdatum2" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 3 :</p>
-					</td>
-					<td align="left" >
-						<input type="text" name="partner3" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 3 :</p>
-					</td>
-					<td align="left" >
-						<input type="text" name="huwlijksdatum3" value=""/>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-					</td>
-					<td align="right" >
 						<input type="submit" name="Toevoegen" value="toevoegen"  /><br/>
-					</td>
+					</td>					
 				</tr>
 				<tr>
-					<td width="150px">
+					<td>
 						 <?php
 						// echo '<pre>';
 						// echo '<br/>';
@@ -326,10 +264,10 @@ $broerzus2 = $_POST["broerzus2"];
 			</form>
 		</div>
 	</div>
-</div>
-	<div id="footer_container" >
+	<div id="footer_container">
 			<a href="<?php echo $path; ?>/stamboom.php">terug</a>
-		</div>
+	</div>
+</div>
 </body> 
 </html> 
 

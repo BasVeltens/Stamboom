@@ -1,17 +1,17 @@
 <?php
-require_once('../dbconfigStamboom.php'); //verbinding met de database maken
+require_once('../dbconfigStamboom.php');
 
 $soort = $_POST["soort"];
 
 if ($soort == "nieuw"){ // het "personenregister" moet hernoemt naar "veltens" en de aanmaak van een nieuwe db met naam ($achternaam) moet gemaakt
-	header('Location:  PT2.php');
+	header('Location:  NS2.php');
 	exit();
 }
-if ($soort == "toevoegen"){
-	header('Location:  ../PersoonToevoegen/PA1.php');
+if ($soort == "toevoegen"){ // verwijziging naar "persoon toevoegen aan bestaande stamboom"
+	header('Location:  ../PersoonToevoegen/PT1.php');
 	exit();
 }
-if ($soort == "wijzigen"){
+if ($soort == "wijzigen"){ // verwijziging naar "persoon wijzigen"
 	header('Location:  ../PersoonWijzigen/PW1.php');
 	exit();
 }
@@ -20,7 +20,7 @@ if ($soort == "wijzigen"){
 
 <html> 
 <head> 
-	<title>Stamboom aanmaken</title> 
+	<title>Stamboom wijzigen</title> 
 	<link rel="icon" 
       type="image/png" 
       href="<?php echo $path; ?>/img/ZwitsalBasje.jpg" />
@@ -30,11 +30,13 @@ if ($soort == "wijzigen"){
 <body>
 <div id="main_container">
 	<div id="header_container">
-		<img src="<?php echo $path; ?>/img/BAFWARE.gif" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
-	<div id="input_container" >
-		<div width="100%" >
-			<table width="100%" border="1" cellspacing="2" cellpadding="3" >
+	<div id="input_container">
+		<div width="100%">
+			<table width="100%" border="1" cellspacing="3" cellpadding="1" >
 				<tr> 
 					<td width="10%" bgcolor="#C5CED3"><a href="<?php echo $path; ?>/stamboom.php">home</a></td>
 					<td width="10%" bgcolor="#D6DDE0">persoon toevoegen/wijzigen</td> 
@@ -46,13 +48,13 @@ if ($soort == "wijzigen"){
 					<td width="30%" bgcolor="#EDEEF1"></td>
 				</tr>
 			</table>
-			<table width="100%" border="0" cellspacing="1" cellpadding="0" rowspan="3">
+			<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td colspan="0" width="100%" height="35px" align="left" >
 					</td>
 				</tr>
 			</table>
-			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/PT1.php" method="post">
+			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/NS1.php" method="post">
 			<table width="100%" border="0" cellspacing="1" cellpadding="2" rowspan="3">
 				<tr>
 					<td colspan="0" width="20%" align="left" >
@@ -67,9 +69,9 @@ if ($soort == "wijzigen"){
 				</tr>
 			</table>
 			</form>
-			</div>
 		</div>
-	<div id="footer_container" >
+	</div>
+	<div id="footer_container">
 			<a href="<?php echo $path; ?>/stamboom.php">terug</a>
 	</div>
 </div>

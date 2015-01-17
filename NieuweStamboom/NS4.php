@@ -1,31 +1,56 @@
 <?php
-require_once('../dbconfigStamboom.php'); //verbinding met de database maken
+require_once('../dbconfigStamboom.php');
 
-$_POST["geslacht"] = $_POST["geslacht1"];
-$_POST["partnerid"] = 1;
-$_POST["persoonid"] = 2;
+$_POST["geslacht"] = $_POST["geslacht1"];// geslacht van 2de persoon voorbereiden voor ingave in db doorgeven
 	
-$db = new mysqli('localhost', 'root', '', 'stamboom'); // met new maken we een nieuw object dat de verbinding met de database heeft, en veel meer
-if ($db->connect_errno > 0) { // het object houdt zijn eigen fouten bij in de property connect_errno
+$db = new mysqli('localhost', 'root', '', 'stamboom');
+if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
-$sql ="INSERT INTO `personenregister` (  `persoon_id` , `partner_id` , `geslacht` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam` , `voorvoegsel_meisjesnaam` , `meisjesnaam` , `geboortedatum` , `doopdatum` , `geboorteplaats` , `doopplaats` , `sterfdatum` , `sterfplaats` , `beroep1` , `beroep2` , `beroep3` , `opmerking1` , `opmerking2` , `documentatie1` , `documentatie2` , `foto1` , `partner1` , `huwlijksdatum1` , `partner2` , `huwlijksdatum2` , `partner3` , `huwlijksdatum3` , `vader` , `moeder` , `broerzus1` , `broerzus2` )
-	VALUES (
-	 '".$_POST["persoonid"]."', '".$_POST["partnerid"]."', '".$_POST["geslacht"]."', '".$_POST["voornaam"]."', '".$_POST["tweedenaam"]."', '".$_POST["derdenaam"]."', '".$_POST["voorvoegsel_achternaam"]."', '".$_POST["achternaam"]."', '".$_POST["voorvoegsel_meisjesnaam"]."', '".$_POST["meisjesnaam"]."', '".$_POST["geboortedatum"]."', '".$_POST["doopdatum"]."', '".$_POST["geboorteplaats"]."', '".$_POST["doopplaats"]."', '".$_POST["sterfdatum"]."', '".$_POST["sterfplaats"]."', '".$_POST["beroep1"]."', '".$_POST["beroep2"]."', '".$_POST["beroep3"]."', '".$_POST["opmerking1"]."', '".$_POST["opmerking2"]."', '".$_POST["documentatie1"]."', '".$_POST["documentatie2"]."', '".$_POST["foto1"]."', '".$_POST["partner1"]."', '".$_POST["huwlijksdatum1"]."', '".$_POST["partner2"]."', '".$_POST["huwlijksdatum2"]."', '".$_POST["partner3"]."', '".$_POST["huwlijksdatum3"]."', '".$_POST["vader"]."', '".$_POST["moeder"]."', '".$_POST["broerzus1"]."', '".$_POST["broerzus2"]."'
-	);"; //bereidt de query voor
-	$resultaat = $db->query($sql);
-if (!$resultaat) { // als geen resource, fout weergeven
-	echo $db->error . "<br/>" ; // foutmelding van db weergeven. de foutmelding staat in property error
+if ($_POST["relatie"] == 'partner') { // als relatie = partner dan "partnerschap_id" ingeven in tabel "personenregister" bij beide personen en "partner1_id" en "partner2_id" in tabel "partnerschap"
+	$sql ="INSERT INTO `personenregister` ( `geslacht` , `partner_id` , `partnerschap_id` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam` , `voorvoegsel_meisjesnaam` , `meisjesnaam` , `geboortedatum` , `doopdatum` , `geboorteplaats` , `doopplaats` , `sterfdatum` , `sterfplaats` , `beroep1` , `beroep2` , `beroep3` , `opmerking1` , `opmerking2` , `documentatie1` , `documentatie2` , `foto1` )
+		VALUES (
+		 '".$_POST["geslacht"]."', '1' , '1' , '".$_POST["voornaam"]."', '".$_POST["tweedenaam"]."', '".$_POST["derdenaam"]."', '".$_POST["voorvoegsel_achternaam"]."', '".$_POST["achternaam"]."', '".$_POST["voorvoegsel_meisjesnaam"]."', '".$_POST["meisjesnaam"]."', '".$_POST["geboortedatum"]."', '".$_POST["doopdatum"]."', '".$_POST["geboorteplaats"]."', '".$_POST["doopplaats"]."', '".$_POST["sterfdatum"]."', '".$_POST["sterfplaats"]."', '".$_POST["beroep1"]."', '".$_POST["beroep2"]."', '".$_POST["beroep3"]."', '".$_POST["opmerking1"]."', '".$_POST["opmerking2"]."', '".$_POST["documentatie1"]."', '".$_POST["documentatie2"]."', '".$_POST["foto1"]."'
+		);";
+		$resultaat = $db->query($sql); // 2de persoon invoeren in db
+		if (!$resultaat) {
+		echo "Fout: Invoeren van 2de persoon mislukt : " . $db->error . "<br/>" ;
+		}
+	$sql1 = "UPDATE `personenregister` SET
+	`partner_id` = '2',
+	`partnerschap_id` = '1'
+	WHERE `persoon_id` = '1'
+	";
+	$resultaat1 = $db->query($sql1); // "partner_id" en "partnerschap_id" van eerste persoon bijwerken
+	if (!$resultaat1) {
+		echo "Fout! Partner_id of partnerschap_id niet bijgewerkt : " . $db->error . "<br/>" ;
+	}
+	$sql2 ="INSERT INTO `partnerschap` ( `partner1_id` , `partner2_id` )
+		VALUES (
+		  '1' , '2'
+		);";
+		$resultaat2 = $db->query($sql2); // tabel "partnerschap" bijwerken
+		if (!$resultaat2) {
+		echo "Fout! Tabel partnerschap is niet bijgewerkt : " . $db->error . "<br/>" ;
+		}
+		$sql2 ="INSERT INTO `kinderen` ( `kinderen_id` )
+		VALUES (
+		  '1'
+		);";
+		$resultaat2 = $db->query($sql2); // tabel "kinderen" bijwerken
+		if (!$resultaat2) {
+		echo "Fout! Tabel kinderen is niet bijgewerkt : " . $db->error . "<br/>" ;
+		}
 }
 
-$sql2 = "SELECT `geslacht` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam`  , `voorvoegsel_meisjesnaam`, `meisjesnaam` , `geboortedatum` , `doopdatum` , `geboorteplaats` , `doopplaats` , `sterfdatum` , `sterfplaats` , `beroep1` , `beroep2` , `beroep3` , `opmerking1` , `opmerking2` , `documentatie1` , `documentatie2` , `foto1` , `partner1` , `huwlijksdatum1` , `partner2` , `huwlijksdatum2` , `partner3` , `huwlijksdatum3` , `vader` , `moeder` , `broerzus1` , `broerzus2`
+$sql3 = "SELECT `geslacht` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam`  , `voorvoegsel_meisjesnaam`, `meisjesnaam` , `geboortedatum` , `doopdatum` , `geboorteplaats` , `doopplaats` , `sterfdatum` , `sterfplaats` , `beroep1` , `beroep2` , `beroep3` , `opmerking1` , `opmerking2` , `documentatie1` , `documentatie2` , `foto1`
 FROM `personenregister`
-WHERE `persoon_auto_id` = 1"; //bereid de query voor
-$resultaat2 = $db->query($sql2); // hetzelfde idee, maar nu wordt op het object $db de functie ->query() uitgevoerd. resultaat is weer data-resource of niets.
-if (!$resultaat2) {//als geen resource, fout weergeven
-	echo "Geen resultaat gevonden voor 'persoon_id' waar 'persoon_auto_id = 1 ': " . $db->error . "<br/>"; // foutmelding van db weergeven. de foutmelding staat in property error
+WHERE `persoon_id` = '1' ;";
+$resultaat3 = $db->query($sql3); // eerste persoon selecteren
+if (!$resultaat3) {
+	echo "Geen resultaat gevonden voor eerste persoon ': " . $db->error . "<br/>";
 }
-while($row = $resultaat2->fetch_assoc()){
+while($row = $resultaat3->fetch_assoc()){ // eerste persoon uitlezen uit db
 		$geslacht1 = $row['geslacht'];
 		$voornaam1 = $row['voornaam'];
 		$tweedenaam1 = $row['tweedenaam'];
@@ -54,11 +79,7 @@ while($row = $resultaat2->fetch_assoc()){
 		$huwlijksdatum21 = $row['huwlijksdatum2'];
 		$partner31 = $row['partner3'];
 		$huwlijksdatum31 = $row['huwlijksdatum3'];
-		$vader1 = $row['vader'];
-		$moeder1 = $row['moeder'];
-		$broerzus11 = $row['broerzus1'];
-		$broerzus21 = $row['broerzus2'];
-	};
+	}
 ?>
 
 <html> 
@@ -73,10 +94,12 @@ while($row = $resultaat2->fetch_assoc()){
 <body>
 <div id="main_container">
 	<div id="header_container">
-		<img src="<?php echo $path; ?>/img/BAFWARE.gif" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
 	<div id="input_container" >
-		<table width="100%" border="1" cellpadding="3" cellspacing="1" bgcolor="#516B88">
+		<table width="100%" border="1" cellpadding="3" cellspacing="1">
 			<tr> 
 				<td width="10%" bgcolor="#C5CED3"><a href="<?php echo $path; ?>/stamboom.php">home</a></td>
 				<td width="10%" bgcolor="#D6DDE0">persoon toevoegen/wijzigen</td> 
@@ -88,14 +111,14 @@ while($row = $resultaat2->fetch_assoc()){
 				<td width="30%" bgcolor="#EDEEF1"></td>
 			</tr>
 		</table>
-		<table width="100%" border="0" cellspacing="1" cellpadding="0" rowspan="3">
+		<table width="100%" border="0" cellspacing="1" cellpadding="0">
 				<tr>
 					<td colspan="0" width="100%" height="35px" align="left" >
 					</td>
 				</tr>
 			</table>
 		<div width="100%" >
-			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/PT5.php" method="post">
+			<form name="input" action="<?php echo $path; ?>/NieuweStamboom/NS5.php" method="post">
 			<table width="100%" border="0" cellspacing="1" cellpadding="0" rowspan="3">
 				<tr>
 					<td colspan="0" width="15%" align="right" >
@@ -113,9 +136,9 @@ while($row = $resultaat2->fetch_assoc()){
 					</td>
 					<td colspan="0" width="50%" align="center" valign="center">
 						<p><H3> <?php echo $voornaam1; ?> <?php echo $tweedenaam1; ?> <?php echo $derdenaam1; ?> <?php echo $voorvoegsel_achternaam1; ?> <?php echo $achternaam1; ?> - <?php echo $voorvoegsel_meisjesnaam1; ?> <?php echo $meisjesnaam1; ?>
-								</H3></p><br/><br/>
-						<p>is de <?php echo $_POST["relatie"]; ?> van:</p><br/><br/>
-						<p><H3> <?php echo $_POST["voornaam"]; ?> <?php echo $_POST["tweedenaam"]; ?> <?php echo $_POST["derdenaam"]; ?> <?php echo $_POST["tussenvoegsel"]; ?> <?php echo $_POST["achternaam"]; ?> - <?php echo $_POST["meisjesnaam"]; ?>
+								</H3></p><br/>
+						<p>is de <?php echo $_POST["relatie"]; ?> van:</p><br/>
+						<p><H3> <?php echo $_POST["voornaam"]; ?> <?php echo $_POST["tweedenaam"]; ?> <?php echo $_POST["derdenaam"]; ?> <?php echo $voorvoegsel_achternaam1; ?> <?php echo $achternaam1; ?> - <?php echo $_POST["voorvoegsel_meisjesnaam"]; ?> <?php echo $_POST["meisjesnaam"]; ?>
 								</H3></p>
 					</td>
 				</tr>
@@ -163,13 +186,13 @@ while($row = $resultaat2->fetch_assoc()){
 				</tr>
 				<tr>
 					<td align="right" >
-						<p>Voorvoegsel achternaam:</p>
+						<p>Voorvoegsel achternaam :</p>
 					</td>
 					<td align="left" >
 						<?php echo $voorvoegsel_achternaam1; ?>
 					</td>
 					<td align="right" >
-						<p>Voorvoegsel achternaam:</p>
+						<p>Voorvoegsel achternaam :</p>
 					</td>
 					<td>
 						<?php echo $_POST["voorvoegsel_achternaam"]; ?>
@@ -191,13 +214,13 @@ while($row = $resultaat2->fetch_assoc()){
 				</tr>
 				<tr>
 					<td align="right" >
-						<p>Voorvoegsel meisjesnaam:</p>
+						<p>Voorvoegsel meisjesnaam :</p>
 					</td>
 					<td align="left" >
 						<?php echo $voorvoegsel_meisjesnaam1; ?>
 					</td>
 					<td align="right" >
-						<p>Voorvoegsel meisjesnaam:</p>
+						<p>Voorvoegsel meisjesnaam :</p>
 					</td>
 					<td>
 						<?php echo $_POST["voorvoegsel_meisjesnaam"]; ?>
@@ -412,96 +435,12 @@ while($row = $resultaat2->fetch_assoc()){
 					<td>
 						<?php echo $_POST["foto1"]; ?>
 					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 1 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $partner11; ?>
-					</td>
-					<td align="right" >
-						<p>Partner 1 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["partner1"]; ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 1 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $huwlijksdatum11; ?>
-					</td>
-					<td align="right" >
-						<p>Huwelijksdatum 1 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["huwlijksdatum1"]; ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 2 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $partner21; ?>
-					</td>
-					<td align="right" >
-						<p>Partner 2 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["partner2"]; ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 2 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $huwlijksdatum21; ?>
-					</td>
-					<td align="right" >
-						<p>Huwelijksdatum 2 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["huwlijksdatum2"]; ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Partner 3 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $partner31; ?>
-					</td>
-					<td align="right" >
-						<p>Partner 3 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["partner3"]; ?>
-					</td>
-				</tr>
-				<tr>
-					<td align="right" >
-						<p>Huwelijksdatum 3 :</p>
-					</td>
-					<td align="left" >
-						<?php echo $huwlijksdatum31; ?>
-					</td>
-					<td align="right" >
-						<p>Huwelijksdatum 3 :</p>
-					</td>
-					<td>
-						<?php echo $_POST["huwlijksdatum3"]; ?>
-					</td>
 					<td align="left" width="5%"  >
 						<input type="submit" name="Bevestigen" value="Bevestigen"  /><br/>
 					</td>
 				</tr>
 				<tr>
-					<td align="right" >
+					<td>
 					</td>
 				</tr>
 				<tr>
@@ -517,7 +456,7 @@ while($row = $resultaat2->fetch_assoc()){
 			</form>
 		</div>
 	</div>
-	<div id="footer_container" >
+	<div id="footer_container">
 			<a href="<?php echo $path; ?>/stamboom.php">terug</a>
 	</div>
 </div>
