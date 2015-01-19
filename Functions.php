@@ -1,36 +1,14 @@
 <?php
-require_once('../dbconfigStamboom.php'); 
+require_once('../dbconfigStamboom.php');
 
-function personenSelecteren ($voornaam,$voornaam1,$voornaam2) {
-$geslacht = $_POST['geslacht'];
-$persoonkeuze = $_POST['persoonkeuze'];
-
-$voornaam = $row['voornaam'];
-$tweedenaam = $row['tweedenaam'];
-$derdenaam = $row['derdenaam'];
-$voorvoegsel_achternaam = $row['voorvoegsel_achternaam'];
-$achternaam = $row['achternaam'];
-$voorvoegsel_meisjesnaam = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam = $row['meisjesnaam'];
-$voornaam1 = $row['voornaam'];
-$tweedenaam1 = $row['tweedenaam'];
-$derdenaam1 = $row['derdenaam'];
-$voorvoegsel_achternaam1 = $row['voorvoegsel_achternaam'];
-$achternaam1 = $row['achternaam'];
-$voorvoegsel_meisjesnaam1 = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam1 = $row['meisjesnaam'];
-$voornaam2 = $row['voornaam'];
-$tweedenaam2 = $row['tweedenaam'];
-$derdenaam2 = $row['derdenaam'];
-$voorvoegsel_achternaam2 = $row['voorvoegsel_achternaam'];
-$achternaam2 = $row['achternaam'];
-$voorvoegsel_meisjesnaam2 = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam2 = $row['meisjesnaam'];
-
-$db = new mysqli('localhost', 'root', '', 'stamboom'); 
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], '', $dbConfig['dbname']);
 if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
+
+function personenSelecteren ($voornaam,$voornaam1,$voornaam2) {
+
+
 $sql = "SELECT `persoon_id` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam` , `voorvoegsel_meisjesnaam` , `meisjesnaam`
 FROM `personenregister`
 WHERE `persoon_id` = '1' 

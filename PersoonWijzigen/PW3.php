@@ -1,10 +1,11 @@
 <?php
 require_once('../dbconfigStamboom.php');
 
-$db = new mysqli('localhost', 'root', '', 'stamboom');
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], $dbConfig['dbpass'], $dbConfig['dbname']);
 if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
+
 $sql = "UPDATE `personenregister` SET
 	`geslacht` = '" . $_POST["geslacht"] . "',
 	`voornaam` = '" . $_POST["voornaam"] . "',
@@ -47,16 +48,16 @@ if (!$resultaat) {
 	<title>Persoon wijzigen</title> 
 	<link rel="icon" 
       type="image/png" 
-      href="<?php echo $path; ?>../img/ZwitsalBasje.jpg" />
+      href="<?php echo $path; ?>/img/ZwitsalBasje.jpg" />
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
 	<link rel="stylesheet" href="<?php echo $path; ?>../css/style.css" type="text/css" />
 </head> 
 <body>
 <div id="main_container" >
 	<div id="header_container" >
-		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
-		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
-		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>/img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
 	<div id="input_container" >
 		<div width="100%" >

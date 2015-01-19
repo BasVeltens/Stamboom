@@ -1,10 +1,11 @@
 <?php
 require_once('dbconfigStamboom.php'); 
 
-$db = new mysqli('localhost', 'root', '', 'stamboom'); //gegevens van onderwerp uitlezen
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], $dbConfig['dbpass'], $dbConfig['dbname']);
 if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
+
 $sql = "SELECT `persoon_id` , `partner_id` , `partnerschap_id` , `geslacht` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam` , `voorvoegsel_meisjesnaam` , `meisjesnaam`
 FROM `personenregister`
 WHERE `opmerking1` = 'veltensstamboom' 
@@ -35,14 +36,6 @@ $resultaat1 = $db->query($sql1); // gegevens van partner uitlezen
 if (!$resultaat1) {
 	echo "fout: " . $db->error . "<br/>"; 
 }
-$geslacht_relatie = $row['geslacht'];
-$voornaam_relatie = $row['voornaam'];
-$tweedenaam_relatie = $row['tweedenaam'];
-$derdenaam_relatie = $row['derdenaam'];
-$voorvoegsel_achternaam_relatie = $row['voorvoegsel_achternaam'];
-$achternaam_relatie= $row['achternaam'];
-$voorvoegsel_meisjesnaam_relatie = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam_relatie = $row['meisjesnaam'];
 
 while($row = $resultaat1->fetch_assoc()){ // data binnenhalen voor de partner van het onderwerp
 		$geslacht_relatie = $row['geslacht'];
@@ -87,14 +80,6 @@ $resultaat4 = $db->query($sql4); // gegevens van vader uitlezen
 if (!$resultaat4) {
 	echo "fout: " . $db->error . "<br/>"; 
 }
-$geslacht_vader = $row['geslacht'];
-$voornaam_vader = $row['voornaam'];
-$tweedenaam_vader = $row['tweedenaam'];
-$derdenaam_vader = $row['derdenaam'];
-$voorvoegsel_achternaam_vader = $row['voorvoegsel_achternaam'];
-$achternaam_vader= $row['achternaam'];
-$voorvoegsel_meisjesnaam_vader = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam_vader = $row['meisjesnaam'];
 
 while($row = $resultaat4->fetch_assoc()){ // data binnenhalen voor de vader van het onderwerp
 		$geslacht_vader = $row['geslacht'];
@@ -126,14 +111,6 @@ $resultaat6 = $db->query($sql6); // gegevens van moeder uitlezen
 if (!$resultaat6) {
 	echo "fout: " . $db->error . "<br/>"; 
 }
-$geslacht_moeder = $row['geslacht'];
-$voornaam_moeder = $row['voornaam'];
-$tweedenaam_moeder = $row['tweedenaam'];
-$derdenaam_moeder = $row['derdenaam'];
-$voorvoegsel_achternaam_moeder = $row['voorvoegsel_achternaam'];
-$achternaam_moeder = $row['achternaam'];
-$voorvoegsel_meisjesnaam_moeder = $row['voorvoegsel_meisjesnaam'];
-$meisjesnaam_moeder = $row['meisjesnaam'];
 
 while($row = $resultaat6->fetch_assoc()){ // data binnenhalen voor de moeder van het onderwerp
 		$geslacht_moeder = $row['geslacht'];
@@ -173,7 +150,7 @@ while($row = $resultaat1->fetch_assoc()){ // data binnenhalen voor de kind1 van 
 		$tweedenaam_kind1 = $row['tweedenaam'];
 		$derdenaam_kind1 = $row['derdenaam'];
 		$voorvoegsel_achternaam_kind1 = $row['voorvoegsel_achternaam'];
-		$achternaam_vkind1= $row['achternaam'];
+		$achternaam_kind1= $row['achternaam'];
 		$voorvoegsel_meisjesnaam_kind1 = $row['voorvoegsel_meisjesnaam'];
 		$meisjesnaam_kind1 = $row['meisjesnaam'];
 }
@@ -205,7 +182,7 @@ while($row = $resultaat3->fetch_assoc()){ // data binnenhalen voor de kind2 van 
 		$tweedenaam_kind2 = $row['tweedenaam'];
 		$derdenaam_kind2 = $row['derdenaam'];
 		$voorvoegsel_achternaam_kind2 = $row['voorvoegsel_achternaam'];
-		$achternaam_vkind2 = $row['achternaam'];
+		$achternaam_kind2 = $row['achternaam'];
 		$voorvoegsel_meisjesnaam_kind2 = $row['voorvoegsel_meisjesnaam'];
 		$meisjesnaam_kind2 = $row['meisjesnaam'];
 }
@@ -237,7 +214,7 @@ while($row = $resultaat5->fetch_assoc()){ // data binnenhalen voor de kind3 van 
 		$tweedenaam_kind3 = $row['tweedenaam'];
 		$derdenaam_kind3 = $row['derdenaam'];
 		$voorvoegsel_achternaam_kind3 = $row['voorvoegsel_achternaam'];
-		$achternaam_vkind3 = $row['achternaam'];
+		$achternaam_kind3 = $row['achternaam'];
 		$voorvoegsel_meisjesnaam_kind3 = $row['voorvoegsel_meisjesnaam'];
 		$meisjesnaam_kind3 = $row['meisjesnaam'];
 }
@@ -256,9 +233,9 @@ while($row = $resultaat5->fetch_assoc()){ // data binnenhalen voor de kind3 van 
 <body>
 <div id="main_container">
 	<div id="header_container">
-		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
-		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
-		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>/img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
 	<div id="input_container">
 		<div width="100%">
