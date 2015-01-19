@@ -3,10 +3,11 @@ require_once('../dbconfigStamboom.php');
 
 $_POST["geslacht"] = $_POST["geslacht1"];// geslacht van 2de persoon voorbereiden voor ingave in db doorgeven
 	
-$db = new mysqli('localhost', 'root', '', 'stamboom');
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], $dbConfig['dbpass'], $dbConfig['dbname']);
 if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
+
 if ($_POST["relatie"] == 'partner') { // als relatie = partner dan "partnerschap_id" ingeven in tabel "personenregister" bij beide personen en "partner1_id" en "partner2_id" in tabel "partnerschap"
 	$sql ="INSERT INTO `personenregister` ( `geslacht` , `partner_id` , `partnerschap_id` , `voornaam` , `tweedenaam` , `derdenaam` , `voorvoegsel_achternaam` , `achternaam` , `voorvoegsel_meisjesnaam` , `meisjesnaam` , `geboortedatum` , `doopdatum` , `geboorteplaats` , `doopplaats` , `sterfdatum` , `sterfplaats` , `beroep1` , `beroep2` , `beroep3` , `opmerking1` , `opmerking2` , `documentatie1` , `documentatie2` , `foto1` )
 		VALUES (
@@ -94,9 +95,9 @@ while($row = $resultaat3->fetch_assoc()){ // eerste persoon uitlezen uit db
 <body>
 <div id="main_container">
 	<div id="header_container">
-		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
-		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
-		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>/img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
 	<div id="input_container" >
 		<table width="100%" border="1" cellpadding="3" cellspacing="1">

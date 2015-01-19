@@ -1,30 +1,7 @@
 <?php
 require_once('../dbconfigStamboom.php');
 
-$geslacht = $_POST["geslacht"];
-$voornaam = $_POST["voornaam"];
-$tweedenaam = $_POST["tweedenaam"];
-$derdenaam = $_POST["derdenaam"];
-$voorvoegsel_achternaam = $_POST["voorvoegsel_achternaam"];
-$achternaam = $_POST["achternaam"];
-$voorvoegsel_meisjesnaam = $_POST["voorvoegsel_meisjesnaam"];
-$meisjesnaam = $_POST["meisjesnaam"];
-$geboortedatum = $_POST["geboortedatum"];
-$doopdatum = $_POST["doopdatum"];
-$geboorteplaats = $_POST["geboorteplaats"];
-$doopplaats = $_POST["doopplaats"];
-$sterfdatum = $_POST["sterfdatum"];
-$sterfplaats = $_POST["sterfplaats"];
-$beroep1 = $_POST["beroep1"];
-$beroep2 = $_POST["beroep2"];
-$beroep3 = $_POST["beroep3"];
-$opmerking1 = $_POST["opmerking1"];
-$opmerking2 = $_POST["opmerking2"];
-$documentatie1 = $_POST["documentatie1"];
-$documentatie2 = $_POST["documentatie2"];
-$foto1 = $_POST["foto1"];
-		
-$db = new mysqli('localhost', 'root', '', 'stamboom');
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], $dbConfig['dbpass'], $dbConfig['dbname']);
 if ($db->connect_errno > 0) {
 	echo 'Fout! : ' . $db->connect_error;
 }
@@ -246,9 +223,9 @@ if ($_POST["relatie"] == "kind"){ // wanneer relatie = kind
 <body>
 <div id="main_container">
 	<div id="header_container" >
-		<img src="<?php echo $path; ?>../img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
-		<img src="<?php echo $path; ?>../img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
-		<img src="<?php echo $path; ?>../img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/Veltens.png" alt="logo" title="Veltens"  width="96px" align="center"/>
+		<img src="<?php echo $path; ?>/img/BAFWARE.png" alt="logo" title="BAFWARE"  width="500px" align="center"/>
+		<img src="<?php echo $path; ?>/img/ZwitsalBasje.jpg" alt="logo" title="ZwitsalBasje.jpg"  width="96px" align="center"/>
 	</div>
 	<div id="input_container" >
 		<div width="100%" >

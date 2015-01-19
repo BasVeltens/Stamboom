@@ -4,7 +4,11 @@ require_once('dbconfigStamboom.php'); //verbinding met de database maken
 /**
  * Database mysqli functioneel
  */
-$connectie = mysqli_connect('localhost', 'root', '', 'stamboom'); // connectie met database wordt in variabele $connectie opgeslagen. Deze var heb je nodig als je met db wilt praten
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], $dbConfig['dbpass'], $dbConfig['dbname']);
+if ($db->connect_errno > 0) {
+	echo 'Fout! : ' . $db->connect_error;
+} // connectie met database wordt in variabele $connectie opgeslagen. Deze var heb je nodig als je met db wilt praten
+
 $q = "SELECT `voornaam`
 FROM `personenregister`
 WHERE `persoon_id` = 3"; // bereid de query voor
@@ -26,9 +30,9 @@ if (!$resultaat) {//als geen resource, fout weergeven
 /**
  * Database mysqli object georienteerd (OOP)
  */
-$db = new mysqli('localhost', 'root', '', 'stamboom'); // met new maken we een nieuw object dat de verbinding met de database heeft, en veel meer
-if ($db->connect_errno > 0) { // het object houdt zijn eigen fouten bij in de property connect_errno
-	echo 'Fout1: ' . $db->connect_error;
+$db = new mysqli($dbConfig['dbhost'], $dbConfig['dbuser'], '', $dbConfig['dbname']);
+if ($db->connect_errno > 0) {
+	echo 'Fout! : ' . $db->connect_error;
 }
 $sql = "SELECT `voornaam`
 FROM `personenregister`
